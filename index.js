@@ -19,24 +19,24 @@ wss.on("connection", (ws) => {
 
   ws.on("message", (data) => {
     console.log(`Client has sent + ${data}`);
+
     if (isJSON(data)) {
       console.log("Json incoming");
       let currData = JSON.parse(data);
-      console.log(currData);
+      //console.log(currData);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(currData);
         }
       });
-    } else if (typeof data === "string") {
+    } else {
+      data = data.toString();
       console.log(`New String: + ${data}`);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(data);
         }
       });
-    } else {
-      console.log("data unknown");
     }
   });
 
