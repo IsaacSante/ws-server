@@ -21,11 +21,11 @@ wss.on("connection", (ws) => {
     console.log(`Client has sent + ${data}`);
     if (isJSON(data)) {
       console.log("Json incoming");
-      let currData = JSON.parse(data);
-      console.log(currData);
+      //let currData = JSON.parse(data);
+      console.log(JSON.parse(data));
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(currData);
+          client.send(data);
         }
       });
     } else if (typeof data === "string") {
