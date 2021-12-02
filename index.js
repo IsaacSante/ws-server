@@ -22,6 +22,7 @@ wss.on("connection", (ws) => {
     if (isJSON(data)) {
       console.log("Json incoming");
       let currData = JSON.parse(data);
+      console.log(currData);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(currData);
