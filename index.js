@@ -18,19 +18,19 @@ wss.on("connection", (ws) => {
   ws.send("im the Heroku ws server");
 
   ws.on("message", (data) => {
-    console.log(`Client has sent + ${data}`);
+    //console.log(`Client has sent + ${data}`);
     if (isJSON(data)) {
-      console.log("Json incoming");
+      //console.log("Json incoming");
       //let currData = JSON.parse(data);
-      console.log(JSON.parse(data));
+      //console.log(JSON.parse(data));
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(data);
         }
       });
     } else if (typeof data === "string") {
-      console.log("Recognized as string");
-      console.log(`New String: + ${data}`);
+      //console.log("Recognized as string");
+      //console.log(`New String: + ${data}`);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(data);
