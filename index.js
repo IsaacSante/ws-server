@@ -9,23 +9,13 @@ wss.on("connection", (ws) => {
   ws.send("im the Heroku ws server");
 
   ws.on("message", (data) => {
+    data = data.toString();
     console.log(`Client has sent + ${data}`);
-    if (isJSON(data)) {
-      let currData = JSON.parse(data);
-      wss.clients.forEach(function each(client) {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(currData);
-        }
-      });
-    } else if (typeof data === "string") {
-      wss.clients.forEach(function each(client) {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(data);
-        }
-      });
-    } else {
-      console.log("data unknown");
-    }
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
   });
 
   ws.on("close", () => {
