@@ -29,6 +29,7 @@ wss.on("connection", (ws) => {
         }
       });
     } else if (typeof data === "string") {
+      console.log("Recognized as string");
       console.log(`New String: + ${data}`);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -38,7 +39,12 @@ wss.on("connection", (ws) => {
     } else {
       try {
         data = data.toString();
-        console.log(`Client has sent + ${data} + but we did not do anything`);
+        console.log(`New String: + ${data}`);
+        wss.clients.forEach(function each(client) {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(data);
+          }
+        });
       } catch (error) {
         console.error(error);
       }
