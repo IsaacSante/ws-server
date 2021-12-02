@@ -2,6 +2,15 @@ const WebSocket = require("ws");
 const PORT = process.env.PORT || 3000;
 const wss = new WebSocket.Server({ port: PORT });
 
+const isJSON = (message) => {
+  try {
+    const obj = JSON.parse(message);
+    return obj && typeof obj === "object";
+  } catch (err) {
+    return false;
+  }
+};
+
 console.log("server is running");
 
 wss.on("connection", (ws) => {
