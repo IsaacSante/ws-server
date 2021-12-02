@@ -15,7 +15,7 @@ console.log("server is running");
 
 wss.on("connection", (ws) => {
   console.log("New Client Connected");
-  ws.send("im the Heroku ws server");
+  //ws.send("im the Heroku ws server");
 
   ws.on("message", (data) => {
     //console.log(`Client has sent + ${data}`);
