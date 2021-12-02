@@ -36,7 +36,17 @@ wss.on("connection", (ws) => {
         }
       });
     } else {
-      console.log("data unknown");
+      try {
+        data = data.toString();
+        console.log(`Client has sent + ${data}`);
+        wss.clients.forEach(function each(client) {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(data);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   });
 
